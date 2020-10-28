@@ -105,10 +105,13 @@ select {
   transform: translate(-50%, -50%);
 }
 
+<<<<<<< HEAD
 option {
   color: #000;
 }
 
+=======
+>>>>>>> 9635572fbb05d79a49855ef8a2c851dd865105ac
 .submit-button {
   cursor: pointer;
   height: auto;
