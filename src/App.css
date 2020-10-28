@@ -27,7 +27,7 @@
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-  box-shadow: .5em .5em 0 var("--clr-primary");
+  box-shadow: .5em .3em 0 goldenrod;
   border-radius: 2em;
 }
 
@@ -48,6 +48,6 @@
   left: 0;
   width: 25%;
   height: 2px;
-  background: var("--clr-primary");
+  background: var(--clr-primary);
   border-radius: 5em;
 }

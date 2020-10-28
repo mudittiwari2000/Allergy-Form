@@ -15,7 +15,7 @@ function Form() {
   // For dateofbirth Input field
   const [date, setDate] = useState("");
   // For gender Input field
-  const [gender, setGender] = useState("");
+  const [gender, setGender] = useState("Prefer not to say");
   // For allergies Input field, to be passed into AllergyInput component
   const [allergies, setAllergies] = useState("");
 
@@ -39,7 +39,7 @@ function Form() {
   return (
     <form onSubmit={onSubmit} className="form">
       <div className="form-row form-name">
-        <label htmlFor="name">Name</label>
+        <label htmlFor="name">Name<span className="asterisk">*</span></label>
         <input
           type="text"
           value={name}
@@ -47,15 +47,17 @@ function Form() {
           id="name"
           placeholder="Your Name"
           autoComplete="off"
+          required="true"
         />
       </div>
       <div className="form-row form-dob">
-        <label htmlFor="date">Date</label>
+        <label htmlFor="date">Date<span className="asterisk">*</span></label>
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
           id="date"
+          required="true"
         />
       </div>
       <div className="form-row form-gender">
@@ -69,7 +71,7 @@ function Form() {
           >
             <option value="Male">Male</option>
             <option value="Female">Female</option>
-            <option value="Prefer not to say">Prefer not to say</option>
+            <option value="Prefer not to say" selected>Prefer not to say</option>
           </select>
           <span className="custom-arrow"></span>
         </div>

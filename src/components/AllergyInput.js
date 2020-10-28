@@ -42,7 +42,7 @@ function AllergyInput({ allergies, setAllergies }) {
 
   return (
     <div className="form-row form-allergies">
-      <label htmlFor="allergies">Allergies</label>
+      <label htmlFor="allergies">Allergies<span className="asterisk">*</span></label>
       <input
         ref={allergyRef}
         type="text"
@@ -53,6 +53,7 @@ function AllergyInput({ allergies, setAllergies }) {
         name="allergies"
         placeholder="Your Allergies"
         autoComplete="off"
+        required="true"
       />
       <Suggestion
         matches={matches}
