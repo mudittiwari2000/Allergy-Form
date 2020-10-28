@@ -32,12 +32,13 @@ function AllergyInput({ allergies, setAllergies }) {
 
   const onChange = () => {
     const allergyInput = allergyRef.current.value;
-    setAllergyArrayFormatted(
-      allergyInput.split(",").map((allergy) => allergy.trim())
-    );
-    setMatches(checkMatch(allergyInput, allergyArray));
-    setAllergyValue(allergyInput);
-    setAllergies(allergyInput);
+    const allergyArrayTrimmed = allergyInput.split(",").map((allergy) => allergy.trim());
+    const lastInput = allergyArrayTrimmed[allergyArrayTrimmed.length - 1];
+    const exceptLast = allergyArrayTrimmed.slice(0, allergyArrayTrimmed.length - 1);
+    setAllergyArrayFormatted( () => allergyArrayTrimmed );
+    setMatches( () => checkMatch(allergyInput, allergyArray));
+    setAllergyValue( () => allergyInput);
+    setAllergies( () => (lastInput.length? allergyArrayTrimmed: exceptLast) );
   };
 
   return (
@@ -53,16 +54,18 @@ function AllergyInput({ allergies, setAllergies }) {
         name="allergies"
         placeholder="Your Allergies"
         autoComplete="off"
-        required="true"
+        required={true}
       />
       <Suggestion
         matches={matches}
         lastInput={allergyArrayFormatted}
-        setAllergyValue={setAllergyValue}
-        setMatches={setMatches}
+        allergies={allergies}
         allergyRef={allergyRef}
         allergyArray={allergyArray}
         visibility={visibility}
+        setAllergies={setAllergies}
+        setAllergyValue={setAllergyValue}
+        setMatches={setMatches}
         setVisibility={setVisibility}
       />
     </div>

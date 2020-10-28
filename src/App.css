@@ -1,6 +1,9 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,regular,italic,600,600italic,700,700italic,800,800italic);
+
 :root {
-  --clr-primary: #daa520;
+  --clr-primary: #DDAA46;
   --clr-primary-dark: rgb(192, 147, 31);
+  --clr-success: #6FCF97;
 }
 
 #bg {
@@ -50,4 +53,36 @@
   height: 2px;
   background: var(--clr-primary);
   border-radius: 5em;
+}
+
+.success-message {
+  overflow: hidden;
+  font-family: 'Open Sans';
+  width: 80%;
+  margin: 1em auto .5em;
+  text-align: center;
+  text-transform: capitalize;
+  text-shadow: 1px 0px 0 rgba(51, 51, 51, .5),
+    1px 1px 0 rgba(51, 51, 51, .5),
+    0px 1px 0 rgba(51, 51, 51, .5);
+}
+
+.success-message__success {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--clr-success);
+  text-shadow: 1px 0px 0 rgba(51, 51, 51, .5),
+    1px 1px 0 rgba(51, 51, 51, .5),
+    0px 1px 0 rgba(51, 51, 51, .5);
+}
+
+.fa-laugh {
+  color: var(--clr-success);
+  margin-right: .35em;
+  font-size: 1.85rem;
+}
+
+.success-message__thanks {
+  font-size: 1.5rem;
+  color: #f5f5f5;
 }

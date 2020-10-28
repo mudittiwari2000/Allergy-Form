@@ -7,13 +7,18 @@ import "./Suggestion.css";
 function Suggestion({
   matches,
   lastInput,
-  setAllergyValue,
+  allergies,
   allergyRef,
   allergyArray,
-  setMatches,
+  setAllergyValue,
   visibility,
-  setVisibility
+  setMatches,
+  setAllergies,
+  setVisibility,
 }) {
+
+  const exceptLast = lastInput.slice(0, lastInput.length - 1);
+
   const matchDivs = matches.map((match, index) => (
     <div key={index} className="Suggestion__item">
       {match}
@@ -23,12 +28,15 @@ function Suggestion({
   async function forceCheckMatch() {
     await setMatches(checkMatch(allergyRef.current.value, allergyArray));
     await allergyRef.current.focus();
-    await setVisibility(true)
+    await setVisibility(true);
+  }
+
+  async function forceSetAllergies() {
+    await setAllergies(() => (exceptLast));
   }
 
   const onClick = (e) => {
     let changedValue = "";
-    const exceptLast = lastInput.slice(0, lastInput.length - 1);
     const text = e.target.textContent;
     exceptLast.push(text);
     exceptLast.forEach((allergy) => {
@@ -36,7 +44,7 @@ function Suggestion({
     });
     setAllergyValue(changedValue);
     setTimeout(forceCheckMatch, 100);
-    // forceCheckMatch()
+    setTimeout(forceSetAllergies, 150);
   };
 
   return (

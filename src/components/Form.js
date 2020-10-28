@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import firebase from "../firebase";
 
 // StyleSheets
@@ -7,7 +7,7 @@ import "./Form.css";
 // Components
 import AllergyInput from "./AllergyInput";
 
-function Form() {
+function Form({ CompletionMessage, setCompletionMessage }) {
   const db = firebase.firestore();
 
   // For name Input field
@@ -17,7 +17,10 @@ function Form() {
   // For gender Input field
   const [gender, setGender] = useState("Prefer not to say");
   // For allergies Input field, to be passed into AllergyInput component
-  const [allergies, setAllergies] = useState("");
+  const [allergies, setAllergies] = useState(useMemo(() => [], []));
+
+  useEffect(() => {
+  }, [allergies]);
 
   function onSubmit(e) {
     e.preventDefault();
@@ -29,7 +32,8 @@ function Form() {
         allergies: allergies,
       })
       .then(() => {
-        console.log("data submitted Successfully");
+        setCompletionMessage(() => true);
+        console.log("Data Submitted Successfully");
       })
       .catch((err) => {
         console.error(err);
@@ -39,7 +43,9 @@ function Form() {
   return (
     <form onSubmit={onSubmit} className="form">
       <div className="form-row form-name">
-        <label htmlFor="name">Name<span className="asterisk">*</span></label>
+        <label htmlFor="name">
+          Name<span className="asterisk">*</span>
+        </label>
         <input
           type="text"
           value={name}
@@ -47,17 +53,19 @@ function Form() {
           id="name"
           placeholder="Your Name"
           autoComplete="off"
-          required="true"
+          required={true}
         />
       </div>
       <div className="form-row form-dob">
-        <label htmlFor="date">Date<span className="asterisk">*</span></label>
+        <label htmlFor="date">
+          Date<span className="asterisk">*</span>
+        </label>
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
           id="date"
-          required="true"
+          required={true}
         />
       </div>
       <div className="form-row form-gender">
@@ -71,7 +79,7 @@ function Form() {
           >
             <option value="Male">Male</option>
             <option value="Female">Female</option>
-            <option value="Prefer not to say" selected>Prefer not to say</option>
+            <option value="Prefer not to say">Prefer not to say</option>
           </select>
           <span className="custom-arrow"></span>
         </div>
