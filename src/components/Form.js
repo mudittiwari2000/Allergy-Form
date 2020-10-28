@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import firebase from "../firebase";
 
 // StyleSheets
-import './Form.css'
+import "./Form.css";
 
 // Components
 import AllergyInput from "./AllergyInput";
@@ -38,17 +38,18 @@ function Form() {
 
   return (
     <form onSubmit={onSubmit} className="form">
-      <div className="form-row">
+      <div className="form-row form-name">
         <label htmlFor="name">Name</label>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
           id="name"
-          placeholder="Your name"
+          placeholder="Your Name"
+          autoComplete="off"
         />
       </div>
-      <div className="form-row">
+      <div className="form-row form-dob">
         <label htmlFor="date">Date</label>
         <input
           type="date"
@@ -57,22 +58,25 @@ function Form() {
           id="date"
         />
       </div>
-      <div className="form-row">
+      <div className="form-row form-gender">
         <label htmlFor="gender-select">Gender</label>
-        <select
-          name="gender"
-          id="gender-select"
-          value={gender}
-          onChange={(e) => setGender(e.currentTarget.value)}
-        >
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Prefer not to say">Prefer not to say</option>
-        </select>
+        <div className="select-custom">
+          <select
+            name="gender"
+            id="gender-select"
+            value={gender}
+            onChange={(e) => setGender(e.currentTarget.value)}
+          >
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </select>
+          <span className="custom-arrow"></span>
+        </div>
       </div>
       <AllergyInput allergies={allergies} setAllergies={setAllergies} />
 
-      <input type="submit" value="Submit" />
+      <input type="submit" value="Submit" className="submit-button" />
     </form>
   );
 }

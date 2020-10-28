@@ -1,8 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import firebase from "../firebase";
-
-// StyleSheet
-import "./AllergyInput.css";
+import checkMatch from "../utils/checkMatch";
 
 // Components
 import Suggestion from "./Suggestion";
@@ -14,8 +12,12 @@ function AllergyInput({ allergies, setAllergies }) {
     useMemo(() => [...allergyArray], [allergyArray])
   );
   const [allergyArrayFormatted, setAllergyArrayFormatted] = useState([]);
+  const [visibility, setVisibility] = useState(false);
+  const allergyRef = useRef("");
 
   useEffect(() => {
+
+    // Making the connection to firebase firestore to read data from the allergies collection
     const unsubscribe = firebase
       .firestore()
       .collection("allergies")
@@ -24,55 +26,44 @@ function AllergyInput({ allergies, setAllergies }) {
         snapshot.docs.map((doc) => allergyArray.push(doc.data()));
       });
 
+    // closing the connection when the AllergyInput component gets unmounted
     return () => unsubscribe();
   }, [allergyArray]);
 
-  const suggestion = (input, currentValues) => {
-    const inputLength = input.length;
-    const allergyNames = allergyArray.map((allergy) => allergy.name);
-
-    // Checks if the input already contains the match, and if the input matches any allergy names stored in the firestore
-    const matches = allergyNames.filter(
-      (allergy) =>
-        allergy.slice(0, inputLength).trim().toLowerCase() === input &&
-        !currentValues.includes(allergy.trim().toLowerCase())
+  const onChange = () => {
+    const allergyInput = allergyRef.current.value;
+    setAllergyArrayFormatted(
+      allergyInput.split(",").map((allergy) => allergy.trim())
     );
-    return matches;
-  };
-
-  const onChange = (e) => {
-    const allergyInput = e.target.value;
-    setAllergyArrayFormatted(allergyInput.split(",").map((allergy) => allergy.trim()));
-    const allergyArrayTrimmed = allergyInput
-      .split(",")
-      .map((allergy) => allergy.trim().toLowerCase());
-    const latestInput = allergyArrayTrimmed[allergyArrayTrimmed.length - 1];
-    setMatches(suggestion(latestInput, allergyArrayTrimmed));
+    setMatches(checkMatch(allergyInput, allergyArray));
     setAllergyValue(allergyInput);
     setAllergies(allergyInput);
   };
 
   return (
-    <div className="form-row">
+    <div className="form-row form-allergies">
       <label htmlFor="allergies">Allergies</label>
       <input
+        ref={allergyRef}
         type="text"
         id="allergies"
         onChange={onChange}
+        onFocus={() => setVisibility(true)}
         value={allergyValue}
         name="allergies"
         placeholder="Your Allergies"
         autoComplete="off"
       />
-      {matches.map((match, index) => (
-        <Suggestion
-          key={index}
-          match={match}
-          lastInput={allergyArrayFormatted}
-          setAllergyValue={setAllergyValue}
-          setMatches={setMatches}
-        />
-      ))}
+      <Suggestion
+        matches={matches}
+        lastInput={allergyArrayFormatted}
+        setAllergyValue={setAllergyValue}
+        setMatches={setMatches}
+        allergyRef={allergyRef}
+        allergyArray={allergyArray}
+        visibility={visibility}
+        setVisibility={setVisibility}
+      />
     </div>
   );
 }

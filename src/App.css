@@ -1,6 +1,6 @@
 :root {
-  --clr-primary: #0ba6ff;
-  --clr-primary-dark: #1183ca;
+  --clr-primary: #daa520;
+  --clr-primary-dark: rgb(192, 147, 31);
 }
 
 #bg {
@@ -27,7 +27,7 @@
   align-items: flex-start;
   justify-content: center;
   flex-direction: column;
-  box-shadow: .5em .5em 0 goldenrod;
+  box-shadow: .5em .5em 0 var("--clr-primary");
   border-radius: 2em;
 }
 
@@ -48,6 +48,6 @@
   left: 0;
   width: 25%;
   height: 2px;
-  background: goldenrod;
+  background: var("--clr-primary");
   border-radius: 5em;
 }
