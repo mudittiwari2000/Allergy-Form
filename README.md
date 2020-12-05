@@ -1,7 +1,8 @@
 # Allergy Form
 
-## npm install: To install the depenencie for the project
-## npm start: To run the project
+**npm install**: To install the depenencies for the project
+
+**npm start**: To run the project
 
 ### Form using ReactJS, JavaScript, and Google Firebase.
 
